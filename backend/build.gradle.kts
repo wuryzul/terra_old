@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
@@ -16,8 +15,13 @@ dependencies {
   implementation(libs.mapstruct.spring.annotations)
   kapt(libs.mapstruct.spring.extensions)
 
+  implementation(libs.jersey.client)
+
+  kapt("org.springframework.boot:spring-boot-configuration-processor")
+
   implementation("org.springframework.boot:spring-boot-starter-actuator")
   implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+  implementation("org.springframework.boot:spring-boot-starter-validation")
   implementation("org.springframework.boot:spring-boot-starter-webflux")
   implementation("org.springframework.modulith:spring-modulith-starter-core")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

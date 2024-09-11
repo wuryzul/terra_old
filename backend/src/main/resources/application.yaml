@@ -3,3 +3,7 @@ spring:
     name: Terra
   liquibase:
     change-log: classpath:/db/changelog/db.changelog.yaml
+terra:
+  curseforge:
+    root: https://api.curseforge.com/v1
+    api-key: ${CURSE_FORGE_API_KEY}
