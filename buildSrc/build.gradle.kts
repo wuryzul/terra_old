@@ -1,6 +1,6 @@
 plugins {
   id("com.github.ben-manes.versions") version "0.51.0"
-  id("org.gradle.kotlin.kotlin-dsl") version "5.1.1"
+  `kotlin-dsl`
 }
 
 repositories {

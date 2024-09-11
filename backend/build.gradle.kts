@@ -1,7 +1,9 @@
+import org.springframework.boot.gradle.tasks.run.BootRun
+
 plugins {
   id("io.wury.terra.gradle.kotlin.terra-kotlin-library")
   id("io.wury.terra.gradle.kotlin.terra-kotlin-spring")
-  id("io.wury.terra.gradle.spirng.terra-spring-boot")
+  id("io.wury.terra.gradle.spring.terra-spring-boot")
 }
 
 dependencies {
