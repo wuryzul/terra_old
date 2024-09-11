@@ -1,3 +1,3 @@
-# Terra
+# App
 
-Terra is a client for modded minecraft.
+App is a client for modded minecraft.
