@@ -1,13 +1,20 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
   id("io.wury.terra.gradle.kotlin.terra-kotlin-library")
+  id("io.wury.terra.gradle.kotlin.terra-kapt")
   id("io.wury.terra.gradle.kotlin.terra-kotlin-spring")
   id("io.wury.terra.gradle.spring.terra-spring-boot")
 }
 
 dependencies {
   implementation(platform(rootProject))
+
+  implementation(libs.mapstruct)
+  kapt(libs.mapstruct.processor)
+  implementation(libs.mapstruct.spring.annotations)
+  kapt(libs.mapstruct.spring.extensions)
 
   implementation("org.springframework.boot:spring-boot-starter-actuator")
   implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
@@ -51,5 +58,11 @@ tasks.named<BootRun>("bootRun") {
 tasks.named<Jar>("bootJar") {
   from(project(":frontend").file("dist/resources")) {
     into("static")
+  }
+}
+
+kapt {
+  arguments {
+    arg("mapstruct.defaultComponentModel", "spring")
   }
 }
