@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: Terra
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog.yaml

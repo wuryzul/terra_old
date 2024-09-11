@@ -14,3 +14,7 @@ java {
     version = "21"
   }
 }
+
+tasks.withType<Test> {
+  useJUnitPlatform()
+}
