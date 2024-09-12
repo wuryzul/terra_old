@@ -56,4 +56,27 @@ class ModService(
 
     fun getModBySlug(slug: String): Mono<ModModel> =
         modRepository.findBySlug(slug).toModel().switchIfEmpty { getModFromCurseForge(slug) }
+
+    fun getModDescription(modId: Long): Mono<String> =
+        modRepository.getDescription(modId).switchIfEmpty {
+            getModById(modId).flatMap { mod ->
+                modClient.getModDescription(mod.curseForgeID).map {
+                    modRepository.insertDescription(mod.curseForgeID, it.data)
+                    it.data
+                }
+            }
+        }
+
+    fun getModDescriptionByCurseForgeID(curseForgeID: Long): Mono<String> =
+        modRepository.getDescription(curseForgeID).switchIfEmpty {
+            modClient.getModDescription(curseForgeID).map { it.data }
+                .doOnSuccess {
+                    modRepository.insertDescription(curseForgeID, it)
+                }
+        }
+
+    fun getModDescriptionBySlug(slug: String): Mono<String> =
+        getModBySlug(slug).flatMap {
+            getModDescription(it.id!!)
+        }
 }

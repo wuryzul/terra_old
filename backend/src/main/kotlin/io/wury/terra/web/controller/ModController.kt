@@ -1,6 +1,7 @@
 package io.wury.terra.web.controller
 
 import io.wury.terra.web.representation.request.GetModsRequest
+import io.wury.terra.web.representation.response.GetModDescriptionResponse
 import io.wury.terra.web.representation.response.GetModResponse
 import io.wury.terra.web.representation.response.GetModsResponse
 import io.wury.terra.web.service.ModWebService
@@ -50,5 +51,20 @@ class ModController(
     @GetMapping("/slug/{slug}")
     fun getModBySlug(@PathVariable slug: String): Mono<GetModResponse> {
         return modWebService.getModBySlug(slug).handleError()
+    }
+
+    @GetMapping("/{modId}/description")
+    fun getModDescription(@PathVariable modId: Long): Mono<GetModDescriptionResponse> {
+        return modWebService.getModDescription(modId).handleError()
+    }
+
+    @GetMapping("/cf/{curseForgeID}/description")
+    fun getModDescriptionByCurseForgeID(@PathVariable curseForgeID: Long): Mono<GetModDescriptionResponse> {
+        return modWebService.getModDescriptionByCurseForgeID(curseForgeID).handleError()
+    }
+
+    @GetMapping("/slug/{slug}/description")
+    fun getModDescriptionBySlug(@PathVariable slug: String): Mono<GetModDescriptionResponse> {
+        return modWebService.getModDescriptionBySlug(slug).handleError()
     }
 }

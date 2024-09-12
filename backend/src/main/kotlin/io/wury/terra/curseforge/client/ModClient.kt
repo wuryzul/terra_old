@@ -48,9 +48,9 @@ class ModClient(
             .bodyToMono()
     }
 
-    fun getModDescription(modId: Long): Mono<StringResponse> {
+    fun getModDescription(curseForgeID: Long): Mono<StringResponse> {
         return client.get()
-            .uri("mods/$modId/description")
+            .uri("/mods/$curseForgeID/description")
             .retrieve()
             .bodyToMono()
     }
