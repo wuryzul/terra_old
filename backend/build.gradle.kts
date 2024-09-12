@@ -15,8 +15,6 @@ dependencies {
   implementation(libs.mapstruct.spring.annotations)
   kapt(libs.mapstruct.spring.extensions)
 
-  implementation(libs.jersey.client)
-
   kapt("org.springframework.boot:spring-boot-configuration-processor")
 
   implementation("org.springframework.boot:spring-boot-starter-actuator")

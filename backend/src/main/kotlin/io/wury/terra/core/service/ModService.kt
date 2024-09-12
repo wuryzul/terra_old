@@ -15,7 +15,9 @@ class ModService(
     private val modModelToEntityMapper: ModModelToEntityMapper,
 ) {
     fun createMod(mod: ModModel): Mono<ModModel> {
-        return modRepository.save(modModelToEntityMapper.convert(mod)).map {
+        val entity = modModelToEntityMapper.convert(mod)
+        // TODO: how to save? https://stackoverflow.com/questions/59468908/reactive-repository-throws-exception-when-saving-a-new-object
+        return modRepository.save(entity).map {
             modEntityToModelMapper.convert(it)
         }
     }
@@ -28,6 +30,12 @@ class ModService(
 
     fun getModById(id: Long): Mono<ModModel> {
         return modRepository.findById(id).map {
+            modEntityToModelMapper.convert(it)
+        }
+    }
+
+    fun getModByCurseForgeID(curseForgeID: Long): Mono<ModModel> {
+        return modRepository.findByCurseForgeID(curseForgeID).map {
             modEntityToModelMapper.convert(it)
         }
     }

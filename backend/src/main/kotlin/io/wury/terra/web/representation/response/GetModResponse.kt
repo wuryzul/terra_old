@@ -1,5 +1,6 @@
 package io.wury.terra.web.representation.response
 
 data class GetModResponse(
-    val id: Long
+    val id: Long,
+    val curseForgeID: Long,
 )

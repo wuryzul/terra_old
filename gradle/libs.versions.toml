@@ -2,7 +2,7 @@
 spring-modulith = "1.2.3"
 mapstruct = "1.6.0"
 mapstruct-spring-extensions = "1.1.2"
-jersey-client = "4.0.0-M1"
+jersey = "3.1.8"
 
 [libraries]
 spring-modulith-bom = { module = "org.springframework.modulith:spring-modulith-bom", version.ref = "spring-modulith" }
@@ -12,4 +12,8 @@ mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.re
 mapstruct-spring-annotations = { module = "org.mapstruct.extensions.spring:mapstruct-spring-annotations", version.ref = "mapstruct-spring-extensions" }
 mapstruct-spring-extensions = { module = "org.mapstruct.extensions.spring:mapstruct-spring-extensions", version.ref = "mapstruct-spring-extensions" }
 
-jersey-client = { module = "org.glassfish.jersey.core:jersey-client", version.ref = "jersey-client" }
+jersey-bom = { module = "org.glassfish.jersey:jersey-bom", version.ref = "jersey" }
+
+jersey-client = { module = "org.glassfish.jersey.core:jersey-client" }
+
+jersey-media-json-jackson = { module = "org.glassfish.jersey.media:jersey-media-json-jackson" }
