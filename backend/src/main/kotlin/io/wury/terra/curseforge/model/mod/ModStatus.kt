@@ -2,7 +2,6 @@ package io.wury.terra.curseforge.model.mod
 
 import com.fasterxml.jackson.annotation.JsonValue
 
-
 enum class ModStatus(
     @JsonValue
     val value: Int,

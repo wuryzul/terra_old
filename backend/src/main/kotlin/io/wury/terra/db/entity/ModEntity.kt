@@ -1,5 +1,6 @@
 package io.wury.terra.db.entity
 
+import io.wury.terra.core.model.ModStatus
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 
@@ -12,6 +13,7 @@ data class ModEntity(
     val name: String,
     val slug: String,
     val summary: String,
+    val status: ModStatus,
     val downloadCount: Long,
     val featured: Boolean,
     val primaryCategoryId: Int,
