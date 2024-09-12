@@ -1,11 +1,14 @@
 package io.wury.terra.web.controller
 
+import io.wury.terra.web.representation.request.GetModsRequest
 import io.wury.terra.web.representation.response.GetModResponse
 import io.wury.terra.web.representation.response.GetModsResponse
 import io.wury.terra.web.service.ModWebService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
@@ -29,6 +32,11 @@ class ModController(
         return modWebService.getAllMods().handleError()
     }
 
+    @PostMapping
+    fun getMods(@RequestBody request: GetModsRequest): Mono<GetModsResponse> {
+        return modWebService.getMods(request).handleError()
+    }
+
     @GetMapping("/{id}")
     fun getModById(@PathVariable id: Long): Mono<GetModResponse> {
         return modWebService.getModById(id).handleError()
@@ -37,5 +45,10 @@ class ModController(
     @GetMapping("/cf/{curseForgeID}")
     fun getModByCurseForgeID(@PathVariable curseForgeID: Long): Mono<GetModResponse> {
         return modWebService.getModByCurseForgeID(curseForgeID).handleError()
+    }
+
+    @GetMapping("/slug/{slug}")
+    fun getModBySlug(@PathVariable slug: String): Mono<GetModResponse> {
+        return modWebService.getModBySlug(slug).handleError()
     }
 }

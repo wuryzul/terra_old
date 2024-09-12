@@ -32,7 +32,7 @@ enum class SortOrder(
 }
 
 data class SearchModsRequest(
-    val gameId: Int,
+    val gameId: Int = 432,
     val classId: Int? = null,
     val categoryId: Int? = null,
     val categoryIds: String? = null,

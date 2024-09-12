@@ -2,6 +2,10 @@ package io.wury.terra.test
 
 import io.wury.terra.TerraApp
 import io.wury.terra.curseforge.client.ModClient
+import io.wury.terra.curseforge.representation.request.SearchModsRequest
+import kotlinx.coroutines.reactor.awaitSingle
+import kotlinx.coroutines.reactor.awaitSingleOrNull
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -23,8 +27,18 @@ class TerraApplicationTests(
 
     @Test
     fun testGetMod() {
-        val mod = modClient.getMod(306935).block()
-        assertNotNull(mod)
+        runBlocking {
+            val mod = modClient.getMod(306935).awaitSingleOrNull()
+            assertNotNull(mod)
+        }
+    }
+
+    @Test
+    fun testSearchMod() {
+        runBlocking {
+            val mod = modClient.searchMods(SearchModsRequest(slug = "jei")).awaitSingleOrNull()
+            assertNotNull(mod)
+        }
     }
 
     @Test
