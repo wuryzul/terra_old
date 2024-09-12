@@ -6,7 +6,9 @@ import io.wury.terra.core.model.ModModel
 import io.wury.terra.curseforge.client.ModClient
 import io.wury.terra.curseforge.mapper.CurseForgeMapper
 import io.wury.terra.curseforge.representation.request.SearchModsRequest
+import io.wury.terra.db.entity.ModDescriptionEntity
 import io.wury.terra.db.entity.ModEntity
+import io.wury.terra.db.repository.ModDescriptionRepository
 import io.wury.terra.db.repository.ModRepository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
@@ -17,6 +19,7 @@ import reactor.kotlin.core.publisher.toFlux
 @Service
 class ModService(
     private val modRepository: ModRepository,
+    private val modDescriptionRepository: ModDescriptionRepository,
     private val modClient: ModClient,
     private val curseForgeMapper: CurseForgeMapper,
     private val modEntityToModelMapper: ModEntityToModelMapper,
@@ -57,26 +60,19 @@ class ModService(
     fun getModBySlug(slug: String): Mono<ModModel> =
         modRepository.findBySlug(slug).toModel().switchIfEmpty { getModFromCurseForge(slug) }
 
+    fun getModDescription(mod: ModModel): Mono<String> =
+        modDescriptionRepository.findById(mod.id!!).switchIfEmpty {
+            modClient.getModDescription(mod.curseForgeID)
+                .map { ModDescriptionEntity(modId = mod.id, description = it.data) }
+                .flatMap(modDescriptionRepository::save)
+        }.map(ModDescriptionEntity::description)
+
     fun getModDescription(modId: Long): Mono<String> =
-        modRepository.getDescription(modId).switchIfEmpty {
-            getModById(modId).flatMap { mod ->
-                modClient.getModDescription(mod.curseForgeID).map {
-                    modRepository.insertDescription(mod.curseForgeID, it.data)
-                    it.data
-                }
-            }
-        }
+        getModById(modId).flatMap(::getModDescription)
 
     fun getModDescriptionByCurseForgeID(curseForgeID: Long): Mono<String> =
-        modRepository.getDescription(curseForgeID).switchIfEmpty {
-            modClient.getModDescription(curseForgeID).map { it.data }
-                .doOnSuccess {
-                    modRepository.insertDescription(curseForgeID, it)
-                }
-        }
+        getModByCurseForgeID(curseForgeID).flatMap(::getModDescription)
 
     fun getModDescriptionBySlug(slug: String): Mono<String> =
-        getModBySlug(slug).flatMap {
-            getModDescription(it.id!!)
-        }
+        getModBySlug(slug).flatMap(::getModDescription)
 }
