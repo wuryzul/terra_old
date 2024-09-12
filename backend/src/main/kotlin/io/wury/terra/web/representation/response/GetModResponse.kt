@@ -3,9 +3,7 @@ package io.wury.terra.web.representation.response
 import io.wury.terra.core.model.ModStatus
 
 data class GetModResponse(
-    val id: Long,
-    val curseForgeID: Long,
-    val gameId: Int,
+    val modId: Int,
     val name: String,
     val slug: String,
     val summary: String,

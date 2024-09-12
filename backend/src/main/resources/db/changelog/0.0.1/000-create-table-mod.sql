@@ -1,7 +1,6 @@
-create table if not exists mod(
-    id bigserial primary key,
-    curse_forge_id int not null unique,
-    game_id int not null,
+create table mod(
+    id serial primary key,
+    mod_id int not null unique,
     name varchar not null,
     slug varchar not null,
     summary varchar not null,

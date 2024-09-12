@@ -1,9 +1,23 @@
 package io.wury.terra.core.model
 
+enum class ModStatus {
+    Unknown,
+    New,
+    ChangesRequired,
+    UnderSoftReview,
+    Approved,
+    Rejected,
+    ChangesMade,
+    Inactive,
+    Abandoned,
+    Deleted,
+    UnderReview,
+    ;
+}
+
 data class ModModel(
-    val id: Long? = null,
-    val curseForgeID: Long,
-    val gameId: Int,
+    val id: Int? = null,
+    val modId: Int,
     val name: String,
     val slug: String,
     val summary: String,

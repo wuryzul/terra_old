@@ -5,14 +5,14 @@ import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.r2dbc.repository.R2dbcRepository
 import reactor.core.publisher.Mono
 
-interface ModDescriptionRepository : R2dbcRepository<ModDescriptionEntity, Long> {
+interface ModDescriptionRepository : R2dbcRepository<ModDescriptionEntity, Int> {
     @Query(
-        "select * from mod_description md inner join mod m where md.mod_id = m.id and m.curseForgeID = :curseForgeID"
+        "select * from mod_description md where md.mod_id = :modId"
     )
-    fun findByCurseForgeID(curseForgeID: Long): Mono<ModDescriptionEntity>
+    fun findByModId(modId: Int): Mono<ModDescriptionEntity>
 
     @Query(
-        "select * from mod_description md inner join mod m where md.mod_id = m.id and m.slug = :slug"
+        "select * from mod_description md inner join mod m on md.mod_id = m.mod_id where m.slug = :slug"
     )
     fun findBySlug(slug: String): Mono<ModDescriptionEntity>
 }

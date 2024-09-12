@@ -6,7 +6,7 @@ import org.springframework.data.relational.core.mapping.Table
 @Table("mod_description")
 data class ModDescriptionEntity(
     @Id
-    val id: Long? = null,
-    val modId: Long,
+    val id: Int? = null,
+    val modId: Int,
     val description: String,
 )

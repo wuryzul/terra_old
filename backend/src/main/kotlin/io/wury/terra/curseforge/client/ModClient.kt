@@ -18,7 +18,7 @@ import kotlin.reflect.full.declaredMemberProperties
 class ModClient(
     private val client: WebClient,
 ) {
-    fun getMod(modId: Long): Mono<GetModResponse> {
+    fun getMod(modId: Int): Mono<GetModResponse> {
         return client.get().uri("/mods/$modId").retrieve().bodyToMono()
     }
 
@@ -48,9 +48,9 @@ class ModClient(
             .bodyToMono()
     }
 
-    fun getModDescription(curseForgeID: Long): Mono<StringResponse> {
+    fun getModDescription(modId: Int): Mono<StringResponse> {
         return client.get()
-            .uri("/mods/$curseForgeID/description")
+            .uri("/mods/$modId/description")
             .retrieve()
             .bodyToMono()
     }

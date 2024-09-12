@@ -34,24 +34,16 @@ class ModWebService(
         return modService.getMods(request.modIds).toGetModsResponse()
     }
 
-    fun getModById(id: Long): Mono<GetModResponse> {
-        return modService.getModById(id).toGetModResponse()
-    }
-
-    fun getModByCurseForgeID(curseForgeID: Long): Mono<GetModResponse> {
-        return modService.getModByCurseForgeID(curseForgeID).toGetModResponse()
+    fun getModByModId(modId: Int): Mono<GetModResponse> {
+        return modService.getMod(modId).toGetModResponse()
     }
 
     fun getModBySlug(slug: String): Mono<GetModResponse> {
         return modService.getModBySlug(slug).toGetModResponse()
     }
 
-    fun getModDescription(modId: Long): Mono<GetModDescriptionResponse> {
+    fun getModDescription(modId: Int): Mono<GetModDescriptionResponse> {
         return modService.getModDescription(modId).toGetModDescriptionResponse()
-    }
-
-    fun getModDescriptionByCurseForgeID(curseForgeID: Long): Mono<GetModDescriptionResponse> {
-        return modService.getModDescriptionByCurseForgeID(curseForgeID).toGetModDescriptionResponse()
     }
 
     fun getModDescriptionBySlug(slug: String): Mono<GetModDescriptionResponse> {

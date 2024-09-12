@@ -31,8 +31,8 @@ class ModService(
     private fun Flux<ModEntity>.toModel(): Flux<ModModel> =
         map(modEntityToModelMapper::convert)
 
-    fun getModFromCurseForge(curseForgeID: Long): Mono<ModModel> {
-        return modClient.getMod(curseForgeID)
+    fun getModFromCurseForge(modId: Int): Mono<ModModel> {
+        return modClient.getMod(modId)
             .map { curseForgeMapper.mapMod(it.data) }
             .flatMap { createMod(it) }
     }
@@ -48,30 +48,24 @@ class ModService(
 
     fun getAllMods(): Flux<ModModel> = modRepository.findAll().toModel()
 
-    fun getMods(modIds: List<Long>): Flux<ModModel> =
-        modIds.toFlux().flatMap { getModByCurseForgeID(it) }
+    fun getMods(modIds: List<Int>): Flux<ModModel> =
+        modIds.toFlux().flatMap { getMod(it) }
 
-
-    fun getModById(id: Long): Mono<ModModel> = modRepository.findById(id).toModel()
-
-    fun getModByCurseForgeID(curseForgeID: Long): Mono<ModModel> =
-        modRepository.findByCurseForgeID(curseForgeID).toModel().switchIfEmpty { getModFromCurseForge(curseForgeID) }
+    fun getMod(modId: Int): Mono<ModModel> =
+        modRepository.findByModId(modId).toModel().switchIfEmpty { getModFromCurseForge(modId) }
 
     fun getModBySlug(slug: String): Mono<ModModel> =
         modRepository.findBySlug(slug).toModel().switchIfEmpty { getModFromCurseForge(slug) }
 
     fun getModDescription(mod: ModModel): Mono<String> =
-        modDescriptionRepository.findById(mod.id!!).switchIfEmpty {
-            modClient.getModDescription(mod.curseForgeID)
-                .map { ModDescriptionEntity(modId = mod.id, description = it.data) }
+        modDescriptionRepository.findByModId(mod.modId).switchIfEmpty {
+            modClient.getModDescription(mod.modId)
+                .map { ModDescriptionEntity(modId = mod.modId, description = it.data) }
                 .flatMap(modDescriptionRepository::save)
         }.map(ModDescriptionEntity::description)
 
-    fun getModDescription(modId: Long): Mono<String> =
-        getModById(modId).flatMap(::getModDescription)
-
-    fun getModDescriptionByCurseForgeID(curseForgeID: Long): Mono<String> =
-        getModByCurseForgeID(curseForgeID).flatMap(::getModDescription)
+    fun getModDescription(modId: Int): Mono<String> =
+        getMod(modId).flatMap(::getModDescription)
 
     fun getModDescriptionBySlug(slug: String): Mono<String> =
         getModBySlug(slug).flatMap(::getModDescription)

@@ -7,9 +7,8 @@ import org.springframework.data.relational.core.mapping.Table
 @Table("mod")
 data class ModEntity(
     @Id
-    val id: Long? = null,
-    val curseForgeID: Long,
-    val gameId: Int,
+    val id: Int? = null,
+    val modId: Int,
     val name: String,
     val slug: String,
     val summary: String,

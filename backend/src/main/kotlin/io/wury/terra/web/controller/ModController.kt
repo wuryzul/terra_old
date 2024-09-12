@@ -38,14 +38,9 @@ class ModController(
         return modWebService.getMods(request).handleError()
     }
 
-    @GetMapping("/{id}")
-    fun getModById(@PathVariable id: Long): Mono<GetModResponse> {
-        return modWebService.getModById(id).handleError()
-    }
-
-    @GetMapping("/cf/{curseForgeID}")
-    fun getModByCurseForgeID(@PathVariable curseForgeID: Long): Mono<GetModResponse> {
-        return modWebService.getModByCurseForgeID(curseForgeID).handleError()
+    @GetMapping("/{modId}")
+    fun getModById(@PathVariable modId: Int): Mono<GetModResponse> {
+        return modWebService.getModByModId(modId).handleError()
     }
 
     @GetMapping("/slug/{slug}")
@@ -54,13 +49,8 @@ class ModController(
     }
 
     @GetMapping("/{modId}/description")
-    fun getModDescription(@PathVariable modId: Long): Mono<GetModDescriptionResponse> {
+    fun getModDescription(@PathVariable modId: Int): Mono<GetModDescriptionResponse> {
         return modWebService.getModDescription(modId).handleError()
-    }
-
-    @GetMapping("/cf/{curseForgeID}/description")
-    fun getModDescriptionByCurseForgeID(@PathVariable curseForgeID: Long): Mono<GetModDescriptionResponse> {
-        return modWebService.getModDescriptionByCurseForgeID(curseForgeID).handleError()
     }
 
     @GetMapping("/slug/{slug}/description")
