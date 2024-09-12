@@ -13,7 +13,6 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.switchIfEmpty
 import reactor.kotlin.core.publisher.toFlux
-import reactor.kotlin.core.publisher.toMono
 
 @Service
 class ModService(
@@ -55,5 +54,6 @@ class ModService(
     fun getModByCurseForgeID(curseForgeID: Long): Mono<ModModel> =
         modRepository.findByCurseForgeID(curseForgeID).toModel().switchIfEmpty { getModFromCurseForge(curseForgeID) }
 
-    fun getModBySlug(slug: String): Mono<ModModel> = modRepository.findBySlug(slug).toModel().switchIfEmpty { getModFromCurseForge(slug) }
+    fun getModBySlug(slug: String): Mono<ModModel> =
+        modRepository.findBySlug(slug).toModel().switchIfEmpty { getModFromCurseForge(slug) }
 }

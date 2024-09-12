@@ -1,20 +1,20 @@
 package io.wury.terra.gradle.java
 
 plugins {
-  id("io.wury.terra.gradle.terra-base")
-  `java-base`
+    id("io.wury.terra.gradle.terra-base")
+    `java-base`
 }
 
 repositories {
-  mavenCentral()
+    mavenCentral()
 }
 
 java {
-  toolchain {
-    version = "21"
-  }
+    toolchain {
+        version = "21"
+    }
 }
 
 tasks.withType<Test> {
-  useJUnitPlatform()
+    useJUnitPlatform()
 }

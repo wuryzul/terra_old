@@ -5,6 +5,4 @@ import org.springframework.context.annotation.Configuration
 
 @SpringMapperConfig
 @Configuration
-class MapperConfig {
-
-}
+class MapperConfig

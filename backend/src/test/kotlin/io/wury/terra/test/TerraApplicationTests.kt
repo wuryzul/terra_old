@@ -3,7 +3,6 @@ package io.wury.terra.test
 import io.wury.terra.TerraApp
 import io.wury.terra.curseforge.client.ModClient
 import io.wury.terra.curseforge.representation.request.SearchModsRequest
-import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
