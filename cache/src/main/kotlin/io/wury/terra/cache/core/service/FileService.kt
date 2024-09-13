@@ -1,7 +1,7 @@
 package io.wury.terra.cache.core.service
 
-import io.wury.terra.cache.core.mapper.FileEntityToModelMapper
-import io.wury.terra.cache.core.mapper.FileModelToEntityMapper
+import io.wury.terra.cache.db.mapper.FileEntityToModelMapper
+import io.wury.terra.cache.db.mapper.FileModelToEntityMapper
 import io.wury.terra.common.core.model.FileModel
 import io.wury.terra.cache.curseforge.client.FileClient
 import io.wury.terra.cache.curseforge.model.mapper.CurseForgeFileMapper

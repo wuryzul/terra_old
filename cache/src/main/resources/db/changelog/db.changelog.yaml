@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      author: Wuryzul
+      id: 0.0.1
+      created: 09/13/2024 5:16 PM CST
+      file: db/changelog/db.changelog-0.0.1.yaml
+      relativeToChangelogFile: false

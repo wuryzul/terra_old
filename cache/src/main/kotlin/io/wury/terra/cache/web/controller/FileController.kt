@@ -1,6 +1,6 @@
 package io.wury.terra.cache.web.controller
 
-import io.wury.terra.cache.web.representation.response.GetFileResponse
+import io.wury.terra.common.web.representation.response.GetFileResponse
 import io.wury.terra.cache.web.service.FileWebService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping

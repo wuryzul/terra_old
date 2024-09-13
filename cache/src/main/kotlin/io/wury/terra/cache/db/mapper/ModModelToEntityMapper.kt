@@ -1,4 +1,4 @@
-package io.wury.terra.cache.core.mapper
+package io.wury.terra.cache.db.mapper
 
 import io.wury.terra.common.core.model.ModModel
 import io.wury.terra.cache.db.entity.ModEntity

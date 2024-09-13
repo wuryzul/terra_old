@@ -1,9 +1,9 @@
 package io.wury.terra.cache.web.controller
 
-import io.wury.terra.cache.web.representation.request.GetModsRequest
-import io.wury.terra.cache.web.representation.response.GetModDescriptionResponse
-import io.wury.terra.cache.web.representation.response.GetModResponse
-import io.wury.terra.cache.web.representation.response.GetModsResponse
+import io.wury.terra.common.web.representation.request.GetModsRequest
+import io.wury.terra.common.web.representation.response.GetModDescriptionResponse
+import io.wury.terra.common.web.representation.response.GetModResponse
+import io.wury.terra.common.web.representation.response.GetModsResponse
 import io.wury.terra.cache.web.service.ModWebService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping

@@ -2,11 +2,11 @@ package io.wury.terra.cache.web.service
 
 import io.wury.terra.common.core.model.ModModel
 import io.wury.terra.cache.core.service.ModService
-import io.wury.terra.cache.web.representation.mapper.GetModResponseMapper
-import io.wury.terra.cache.web.representation.request.GetModsRequest
-import io.wury.terra.cache.web.representation.response.GetModDescriptionResponse
-import io.wury.terra.cache.web.representation.response.GetModResponse
-import io.wury.terra.cache.web.representation.response.GetModsResponse
+import io.wury.terra.common.web.representation.mapper.GetModResponseMapper
+import io.wury.terra.common.web.representation.request.GetModsRequest
+import io.wury.terra.common.web.representation.response.GetModDescriptionResponse
+import io.wury.terra.common.web.representation.response.GetModResponse
+import io.wury.terra.common.web.representation.response.GetModsResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service

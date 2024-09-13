@@ -1,4 +1,5 @@
 plugins {
+    id("io.wury.terra.gradle.kotlin.terra-kotlin-kapt")
     id("io.wury.terra.gradle.kotlin.terra-kotlin-library")
     id("io.wury.terra.gradle.kotlin.terra-kotlin-spring")
     id("io.wury.terra.gradle.spring.terra-spring-boot")
@@ -8,8 +9,9 @@ dependencies {
     implementation(platform(rootProject))
     implementation(project(":common"))
 
-    implementation(libs.mapstruct)
-    implementation(libs.mapstruct.spring.annotations)
+    kapt(libs.spring.boot.configuration.processor)
+    kapt(libs.mapstruct.processor)
+    kapt(libs.mapstruct.spring.extensions)
 
     implementation(libs.mapstruct)
     implementation(libs.mapstruct.spring.annotations)
@@ -23,6 +25,7 @@ dependencies {
     implementation(libs.spring.jdbc)
 
     developmentOnly(libs.spring.boot.devtools)
+    developmentOnly(libs.spring.boot.docker.compose)
 
     runtimeOnly(libs.micrometer.registry.prometheus)
     runtimeOnly(libs.postgresql)
@@ -38,4 +41,10 @@ dependencies {
     testImplementation(libs.testcontainers.r2dbc)
 
     testRuntimeOnly(libs.junit.platform.launcher)
+}
+
+kapt {
+    arguments {
+        arg("mapstruct.defaultComponentModel", "spring")
+    }
 }

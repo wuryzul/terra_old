@@ -1,8 +1,15 @@
+server:
+  port: 8081
 spring:
   application:
     name: Terra
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog.yaml
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+terra:
+  client:
+    root: http://localhost:8080/api

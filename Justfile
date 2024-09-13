@@ -4,6 +4,12 @@ clean:
 build:
     ./gradlew build
 
+cache:
+    ./gradlew :cache:bootRun
+
+backend:
+    ./gradlew :backend:bootRun
+
 watch:
     cd frontend && pnpm build --watch
 

@@ -7,6 +7,7 @@ mapstruct = "1.6.0"
 mapstruct-spring-extensions = "1.1.2"
 
 spring-boot = "3.3.3"
+spring-shell = "3.3.2"
 
 [libraries]
 kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "kotlinx-coroutines" }
@@ -23,6 +24,8 @@ mapstruct-spring-extensions = { module = "org.mapstruct.extensions.spring:mapstr
 
 reactor-kotlin-extensions = { module = "io.projectreactor.kotlin:reactor-kotlin-extensions" }
 
+h2 = { module = "com.h2database:h2" }
+
 liquibase-core = { module = "org.liquibase:liquibase-core" }
 
 micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus" }
@@ -30,8 +33,11 @@ micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-p
 postgresql = { module = "org.postgresql:postgresql" }
 postgresql-r2dbc = { module = "org.postgresql:r2dbc-postgresql" }
 
+r2dbc-h2 = { module = "io.r2dbc:r2dbc-h2" }
+
 spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 spring-boot = { module = "org.springframework.boot:spring-boot" }
+spring-boot-configuration-processor = { module = "org.springframework.boot:spring-boot-configuration-processor", version.ref = "spring-boot" }
 spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
 spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
 spring-boot-testcontainers = { module = "org.springframework.boot:spring-boot-testcontainers" }
@@ -41,6 +47,10 @@ spring-boot-starter-data-r2dbc = { module = "org.springframework.boot:spring-boo
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
 spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+
+spring-shell-dependencies = { module = "org.springframework.shell:spring-shell-dependencies", version.ref = "spring-shell" }
+spring-shell-starter = { module = "org.springframework.shell:spring-shell-starter" }
+spring-shell-starter-test = { module = "org.springframework.shell:spring-shell-starter-test" }
 
 spring-jdbc = { module = "org.springframework:spring-jdbc" }
 spring-webflux = { module = "org.springframework:spring-webflux" }

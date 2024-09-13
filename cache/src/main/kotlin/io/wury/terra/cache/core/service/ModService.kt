@@ -1,7 +1,7 @@
 package io.wury.terra.cache.core.service
 
-import io.wury.terra.cache.core.mapper.ModEntityToModelMapper
-import io.wury.terra.cache.core.mapper.ModModelToEntityMapper
+import io.wury.terra.cache.db.mapper.ModEntityToModelMapper
+import io.wury.terra.cache.db.mapper.ModModelToEntityMapper
 import io.wury.terra.cache.curseforge.client.ModClient
 import io.wury.terra.cache.curseforge.model.mapper.CurseForgeModMapper
 import io.wury.terra.cache.curseforge.representation.request.SearchModsRequest

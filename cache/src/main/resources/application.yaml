@@ -2,7 +2,7 @@ spring:
   application:
     name: Terra Cache
   liquibase:
-    change-log: classpath:/db/db.changelog.yaml
+    change-log: classpath:/db/changelog/db.changelog.yaml
 management:
   endpoints:
     web:
