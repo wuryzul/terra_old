@@ -1,6 +1,5 @@
 package io.wury.terra.test
 
-import io.wury.terra.TerraApp
 import io.wury.terra.curseforge.client.ModClient
 import io.wury.terra.curseforge.representation.request.SearchModsRequest
 import kotlinx.coroutines.reactor.awaitSingleOrNull
@@ -9,8 +8,6 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
-import org.springframework.modulith.core.ApplicationModules
-import org.springframework.modulith.docs.Documenter
 import kotlin.test.assertNotNull
 
 @Import(TestContainersConfiguration::class)
@@ -38,16 +35,5 @@ class TerraApplicationTests(
             val mod = modClient.searchMods(SearchModsRequest(slug = "jei")).awaitSingleOrNull()
             assertNotNull(mod)
         }
-    }
-
-    @Test
-    fun createApplicationModuleModel() {
-        val modules = ApplicationModules.of(TerraApp::class.java)
-        modules.forEach(::println)
-    }
-
-    fun createModuleDocumentation() {
-        val modules = ApplicationModules.of(TerraApp::class.java)
-        Documenter(modules).writeDocumentation().writeIndividualModulesAsPlantUml()
     }
 }
