@@ -6,15 +6,15 @@ import io.wury.terra.core.model.ModModel
 import io.wury.terra.curseforge.client.ModClient
 import io.wury.terra.curseforge.mapper.CurseForgeMapper
 import io.wury.terra.curseforge.representation.request.SearchModsRequest
+import io.wury.terra.curseforge.representation.response.StringResponse
 import io.wury.terra.db.entity.ModDescriptionEntity
 import io.wury.terra.db.entity.ModEntity
 import io.wury.terra.db.repository.ModDescriptionRepository
 import io.wury.terra.db.repository.ModRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.switchIfEmpty
-import reactor.kotlin.core.publisher.toFlux
 
 @Service
 class ModService(
@@ -25,48 +25,49 @@ class ModService(
     private val modEntityToModelMapper: ModEntityToModelMapper,
     private val modModelToEntityMapper: ModModelToEntityMapper,
 ) {
-    private fun Mono<ModEntity>.toModel(): Mono<ModModel> =
+    private suspend fun ModEntity.toModel(): ModModel =
+        let(modEntityToModelMapper::convert)
+
+    private fun Flow<ModEntity>.toModel(): Flow<ModModel> =
         map(modEntityToModelMapper::convert)
 
-    private fun Flux<ModEntity>.toModel(): Flux<ModModel> =
-        map(modEntityToModelMapper::convert)
-
-    fun getModFromCurseForge(modId: Int): Mono<ModModel> {
-        return modClient.getMod(modId)
-            .map { curseForgeMapper.mapMod(it.data) }
-            .flatMap { createMod(it) }
+    suspend fun getModFromCurseForge(modId: Int): ModModel? {
+        return modClient.getMod(modId)?.data?.let(curseForgeMapper::mapMod)?.let { createMod(it) }
     }
 
-    fun getModFromCurseForge(slug: String): Mono<ModModel> {
-        return modClient.searchMods(SearchModsRequest(gameId = 432, slug = slug))
-            .map { it.data.single() }
-            .map(curseForgeMapper::mapMod)
-            .flatMap(::createMod)
+    suspend fun getModFromCurseForge(slug: String): ModModel? {
+        return modClient.searchMods(SearchModsRequest(gameId = 432, slug = slug))?.data?.singleOrNull()?.let { curseForgeMapper.mapMod(it) }
+            ?.let { createMod(it) }
     }
 
-    fun createMod(mod: ModModel): Mono<ModModel> = modRepository.save(modModelToEntityMapper.convert(mod)).toModel()
+    suspend fun createMod(mod: ModModel): ModModel = modRepository.save(modModelToEntityMapper.convert(mod)).toModel()
 
-    fun getAllMods(): Flux<ModModel> = modRepository.findAll().toModel()
+    fun getAllMods(): Flow<ModModel> = modRepository.findAll().toModel()
 
-    fun getMods(modIds: List<Int>): Flux<ModModel> =
-        modIds.toFlux().flatMap { getMod(it) }
+    fun getMods(modIds: List<Int>): Flow<ModModel> =
+        flow<ModModel> {
+            modIds.forEach {
+                getMod(it)?.let { emit(it) }
+            }
+        }
 
-    fun getMod(modId: Int): Mono<ModModel> =
-        modRepository.findByModId(modId).toModel().switchIfEmpty { getModFromCurseForge(modId) }
+    suspend fun getMod(modId: Int): ModModel? =
+        modRepository.findByModId(modId)?.toModel() ?: getModFromCurseForge(modId)
 
-    fun getModBySlug(slug: String): Mono<ModModel> =
-        modRepository.findBySlug(slug).toModel().switchIfEmpty { getModFromCurseForge(slug) }
+    suspend fun getModBySlug(slug: String): ModModel? =
+        modRepository.findBySlug(slug)?.toModel() ?: getModFromCurseForge(slug)
 
-    fun getModDescription(mod: ModModel): Mono<String> =
-        modDescriptionRepository.findByModId(mod.modId).switchIfEmpty {
-            modClient.getModDescription(mod.modId)
-                .map { ModDescriptionEntity(modId = mod.modId, description = it.data) }
-                .flatMap(modDescriptionRepository::save)
-        }.map(ModDescriptionEntity::description)
+    suspend fun getModDescription(mod: ModModel): String? = (modDescriptionRepository.findByModId(mod.modId) ?: modClient.getModDescription(mod.modId)
+        ?.let<StringResponse, ModDescriptionEntity> {
+            ModDescriptionEntity(
+                modId = mod.modId,
+                description = it.data
+            )
+        })?.let<ModDescriptionEntity, ModDescriptionEntity> { modDescriptionRepository.save(it) }?.description
 
-    fun getModDescription(modId: Int): Mono<String> =
-        getMod(modId).flatMap(::getModDescription)
+    suspend fun getModDescription(modId: Int): String? =
+        getMod(modId)?.let { getModDescription(it) }
 
-    fun getModDescriptionBySlug(slug: String): Mono<String> =
-        getModBySlug(slug).flatMap(::getModDescription)
+    suspend fun getModDescriptionBySlug(slug: String): String? =
+        getModBySlug(slug)?.let { getModDescription(it) }
 }

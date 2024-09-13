@@ -7,46 +7,45 @@ import io.wury.terra.web.representation.request.GetModsRequest
 import io.wury.terra.web.representation.response.GetModDescriptionResponse
 import io.wury.terra.web.representation.response.GetModResponse
 import io.wury.terra.web.representation.response.GetModsResponse
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
 
 @Service
 class ModWebService(
     private val modService: ModService,
     private val getModResponseMapper: GetModResponseMapper,
 ) {
-    fun Mono<ModModel>.toGetModResponse(): Mono<GetModResponse> =
-        map(getModResponseMapper::convert)
+    fun ModModel.toGetModResponse(): GetModResponse =
+        getModResponseMapper.convert(this)
 
-    fun Flux<ModModel>.toGetModsResponse(): Mono<GetModsResponse> =
-        map(getModResponseMapper::convert).collectList()
-            .map { GetModsResponse(it) }
+    suspend fun Flow<ModModel>.toGetModsResponse(): GetModsResponse =
+        GetModsResponse(this.toList(mutableListOf()).map { it.toGetModResponse() })
 
-    fun Mono<String>.toGetModDescriptionResponse(): Mono<GetModDescriptionResponse> =
-        map { GetModDescriptionResponse(it) }
+    fun String.toGetModDescriptionResponse(): GetModDescriptionResponse =
+        GetModDescriptionResponse(this)
 
-    fun getAllMods(): Mono<GetModsResponse> {
+    suspend fun getAllMods(): GetModsResponse {
         return modService.getAllMods().toGetModsResponse()
     }
 
-    fun getMods(request: GetModsRequest): Mono<GetModsResponse> {
+    suspend fun getMods(request: GetModsRequest): GetModsResponse {
         return modService.getMods(request.modIds).toGetModsResponse()
     }
 
-    fun getModByModId(modId: Int): Mono<GetModResponse> {
-        return modService.getMod(modId).toGetModResponse()
+    suspend fun getModByModId(modId: Int): GetModResponse? {
+        return modService.getMod(modId)?.toGetModResponse()
     }
 
-    fun getModBySlug(slug: String): Mono<GetModResponse> {
-        return modService.getModBySlug(slug).toGetModResponse()
+    suspend fun getModBySlug(slug: String): GetModResponse? {
+        return modService.getModBySlug(slug)?.toGetModResponse()
     }
 
-    fun getModDescription(modId: Int): Mono<GetModDescriptionResponse> {
-        return modService.getModDescription(modId).toGetModDescriptionResponse()
+    suspend fun getModDescription(modId: Int): GetModDescriptionResponse? {
+        return modService.getModDescription(modId)?.toGetModDescriptionResponse()
     }
 
-    fun getModDescriptionBySlug(slug: String): Mono<GetModDescriptionResponse> {
-        return modService.getModDescriptionBySlug(slug).toGetModDescriptionResponse()
+    suspend fun getModDescriptionBySlug(slug: String): GetModDescriptionResponse? {
+        return modService.getModDescriptionBySlug(slug)?.toGetModDescriptionResponse()
     }
 }

@@ -24,7 +24,7 @@ class TerraApplicationTests(
     @Test
     fun testGetMod() {
         runBlocking {
-            val mod = modClient.getMod(306935).awaitSingleOrNull()
+            val mod = modClient.getMod(306935)
             assertNotNull(mod)
         }
     }
@@ -32,7 +32,7 @@ class TerraApplicationTests(
     @Test
     fun testSearchMod() {
         runBlocking {
-            val mod = modClient.searchMods(SearchModsRequest(slug = "jei")).awaitSingleOrNull()
+            val mod = modClient.searchMods(SearchModsRequest(slug = "jei"))
             assertNotNull(mod)
         }
     }

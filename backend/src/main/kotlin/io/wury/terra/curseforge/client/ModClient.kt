@@ -10,48 +10,47 @@ import io.wury.terra.curseforge.representation.response.SearchModsResponse
 import io.wury.terra.curseforge.representation.response.StringResponse
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
-import org.springframework.web.reactive.function.client.bodyToMono
-import reactor.core.publisher.Mono
+import org.springframework.web.reactive.function.client.awaitBody
 import kotlin.reflect.full.declaredMemberProperties
 
 @Service
 class ModClient(
     private val client: WebClient,
 ) {
-    fun getMod(modId: Int): Mono<GetModResponse> {
-        return client.get().uri("/mods/$modId").retrieve().bodyToMono()
+    suspend fun getMod(modId: Int): GetModResponse {
+        return client.get().uri("/mods/$modId").retrieve().awaitBody()
     }
 
-    fun getMods(modIds: List<Int>, filterPcOnly: Boolean? = null): Mono<GetModsResponse> {
-        return client.post().uri("/mods").bodyValue(GetModsRequest(modIds, filterPcOnly)).retrieve().bodyToMono()
+    suspend fun getMods(modIds: List<Int>, filterPcOnly: Boolean? = null): GetModsResponse {
+        return client.post().uri("/mods").bodyValue(GetModsRequest(modIds, filterPcOnly)).retrieve().awaitBody()
     }
 
-    fun searchMods(request: SearchModsRequest): Mono<SearchModsResponse> {
+    suspend fun searchMods(request: SearchModsRequest): SearchModsResponse {
         return client.get()
             .uri {
                 SearchModsRequest::class.declaredMemberProperties
                     .associate { prop -> prop.name to prop.get(request)?.toString() }.entries
-                    .filter { (_, value) -> value!=null }
+                    .filter { (_, value) -> value != null }
                     .fold(it.path("/mods/search").queryParam("gameId", request.gameId)) { builder, prop ->
                         prop.let { (name, value) -> builder.queryParam(name, value) }
-                    }.also { println("uri: ${it.toUriString()}") }.build()
+                    }.build()
             }
             .retrieve()
-            .bodyToMono()
+            .awaitBody()
     }
 
-    fun getFeaturedMods(request: GetFeaturedModsRequest): Mono<GetFeaturedModsResponse> {
+    suspend fun getFeaturedMods(request: GetFeaturedModsRequest): GetFeaturedModsResponse {
         return client.post()
             .uri("featured")
             .bodyValue(request)
             .retrieve()
-            .bodyToMono()
+            .awaitBody()
     }
 
-    fun getModDescription(modId: Int): Mono<StringResponse> {
+    suspend fun getModDescription(modId: Int): StringResponse {
         return client.get()
             .uri("/mods/$modId/description")
             .retrieve()
-            .bodyToMono()
+            .awaitBody()
     }
 }

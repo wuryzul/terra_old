@@ -8,8 +8,6 @@ import io.wury.terra.curseforge.mapper.CurseForgeMapper
 import io.wury.terra.db.entity.FileEntity
 import io.wury.terra.db.repository.FileRepository
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.switchIfEmpty
 
 @Service
 class FileService(
@@ -20,22 +18,22 @@ class FileService(
     private val fileModelToEntityMapper: FileModelToEntityMapper,
     private val modService: ModService,
 ) {
-    fun getFileFromCurseForge(modId: Int, fileId: Int): Mono<FileModel> {
+    suspend fun getFileFromCurseForge(modId: Int, fileId: Int): FileModel? {
         return fileClient.getFile(modId, fileId)
-            .map { curseForgeMapper.mapFile(it.data) }
-            .flatMap { createFile(it) }
+            ?.let { curseForgeMapper.mapFile(it.data) }
+            ?.let { createFile(it) }
     }
 
-    fun Mono<FileEntity>.toModel(): Mono<FileModel> =
-        map(fileEntityToModelMapper::convert)
+    fun FileEntity.toModel(): FileModel =
+        fileEntityToModelMapper.convert(this)
 
-    fun createFile(file: FileModel): Mono<FileModel> {
-        return modService.getMod(file.modId).flatMap {
+    suspend fun createFile(file: FileModel): FileModel {
+        return modService.getMod(file.modId).let {
             fileRepository.save(fileModelToEntityMapper.convert(file)).toModel()
         }
     }
 
-    fun getFile(modId: Int, fileId: Int): Mono<FileModel> {
-        return fileRepository.findById(modId, fileId).toModel().switchIfEmpty { getFileFromCurseForge(modId, fileId) }
+    suspend fun getFile(modId: Int, fileId: Int): FileModel? {
+        return fileRepository.findById(modId, fileId)?.toModel() ?: getFileFromCurseForge(modId, fileId)
     }
 }

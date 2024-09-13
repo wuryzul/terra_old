@@ -5,17 +5,16 @@ import io.wury.terra.core.service.FileService
 import io.wury.terra.web.mapper.GetFileResponseMapper
 import io.wury.terra.web.representation.response.GetFileResponse
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Mono
 
 @Service
 class FileWebService(
     private val fileService: FileService,
     private val getFileResponseMapper: GetFileResponseMapper
 ) {
-    fun Mono<FileModel>.toGetFileResponse(): Mono<GetFileResponse> =
-        map(getFileResponseMapper::convert)
+    fun FileModel.toResponse(): GetFileResponse =
+        getFileResponseMapper.convert(this)
 
-    fun getFile(modId: Int, fileId: Int): Mono<GetFileResponse> {
-        return fileService.getFile(modId, fileId).toGetFileResponse()
+    suspend fun getFile(modId: Int, fileId: Int): GetFileResponse? {
+        return fileService.getFile(modId, fileId)?.toResponse()
     }
 }
