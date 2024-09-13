@@ -1,19 +1,54 @@
 [versions]
-spring-modulith = "1.2.3"
+kotlinx-coroutines = "1.9.0"
+
+jackson = "2.17.2"
+
 mapstruct = "1.6.0"
 mapstruct-spring-extensions = "1.1.2"
-jersey = "3.1.8"
+
+spring-boot = "3.3.3"
 
 [libraries]
-spring-modulith-bom = { module = "org.springframework.modulith:spring-modulith-bom", version.ref = "spring-modulith" }
+kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+kotlinx-coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor" }
+
+jackson-bom = { module = "com.fasterxml.jackson:jackson-bom", version.ref = "jackson" }
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
 
 mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
 mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
 mapstruct-spring-annotations = { module = "org.mapstruct.extensions.spring:mapstruct-spring-annotations", version.ref = "mapstruct-spring-extensions" }
 mapstruct-spring-extensions = { module = "org.mapstruct.extensions.spring:mapstruct-spring-extensions", version.ref = "mapstruct-spring-extensions" }
 
-jersey-bom = { module = "org.glassfish.jersey:jersey-bom", version.ref = "jersey" }
+reactor-kotlin-extensions = { module = "io.projectreactor.kotlin:reactor-kotlin-extensions" }
 
-jersey-client = { module = "org.glassfish.jersey.core:jersey-client" }
+liquibase-core = { module = "org.liquibase:liquibase-core" }
 
-jersey-media-json-jackson = { module = "org.glassfish.jersey.media:jersey-media-json-jackson" }
+micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus" }
+
+postgresql = { module = "org.postgresql:postgresql" }
+postgresql-r2dbc = { module = "org.postgresql:r2dbc-postgresql" }
+
+spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+spring-boot = { module = "org.springframework.boot:spring-boot" }
+spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
+spring-boot-docker-compose = { module = "org.springframework.boot:spring-boot-docker-compose" }
+spring-boot-testcontainers = { module = "org.springframework.boot:spring-boot-testcontainers" }
+
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-data-r2dbc = { module = "org.springframework.boot:spring-boot-starter-data-r2dbc" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+
+spring-jdbc = { module = "org.springframework:spring-jdbc" }
+spring-webflux = { module = "org.springframework:spring-webflux" }
+
+reactor-test = { module = "io.projectreactor:reactor-test" }
+
+testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter" }
+testcontainers-postgresql = { module = "org.testcontainers:postgresql" }
+testcontainers-r2dbc = { module = "org.testcontainers:r2dbc" }
+
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }

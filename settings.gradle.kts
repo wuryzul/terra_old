@@ -9,7 +9,6 @@ reckon {
     setStageCalc(calcStageFromProp())
 }
 
-include("backend")
-include("frontend")
+include("backend", "cache", "common", "frontend")
 
 rootProject.name = "terra"

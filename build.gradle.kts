@@ -8,6 +8,7 @@ javaPlatform {
 }
 
 dependencies {
-  api(platform(libs.jersey.bom))
-  api(platform(libs.spring.modulith.bom))
+  api(platform(libs.kotlinx.coroutines.bom))
+  api(platform(libs.jackson.bom))
+  api(platform(libs.spring.boot.dependencies))
 }

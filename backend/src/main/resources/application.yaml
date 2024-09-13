@@ -1,14 +1,8 @@
 spring:
   application:
     name: Terra
-  liquibase:
-    change-log: classpath:/db/db.changelog.yaml
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-terra:
-  curseforge:
-    root: https://api.curseforge.com/v1
-    api-key: ${CURSE_FORGE_API_KEY}
