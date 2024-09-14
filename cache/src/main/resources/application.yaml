@@ -11,9 +11,6 @@ spring:
           filters:
             - AddRequestHeader=x-api-key, ${CURSE_FORGE_API_KEY}
             - RewritePath=/api/proxy/(.*), /v1/$1
-  h2:
-    console:
-      enabled: true
   liquibase:
     url: jdbc:h2:file:./.terra/db/cache
     user: sa
@@ -33,16 +30,3 @@ spring:
       AUTO_RECONNECT: TRUE
       MULTI_THREADED: TRUE
       DB_CLOSE_ON_EXIT: TRUE
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-logging:
-  level:
-    liquibase: INFO
-terra:
-  client:
-    root: http://localhost:8080/api/cache
-  curseforge:
-    root: http://localhost:8080/api/proxy

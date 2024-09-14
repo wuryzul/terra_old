@@ -1,22 +1,6 @@
-server:
-  port: 8081
 spring:
   application:
     name: Terra
-  cloud:
-    gateway:
-      routes:
-        - id: cache_proxy
-          uri: http://localhost:8080
-          predicates:
-            - Path=/api/cache/**
-        - id: curse_forge_proxy
-          uri: http://localhost:8080
-          predicates:
-            - Path=/api/proxy/**
-  h2:
-    console:
-      enabled: true
   liquibase:
     url: jdbc:h2:mem:backend
     user: sa
@@ -36,16 +20,3 @@ spring:
       AUTO_RECONNECT: TRUE
       MULTI_THREADED: TRUE
       DB_CLOSE_ON_EXIT: TRUE
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-logging:
-  level:
-    liquibase: INFO
-terra:
-  client:
-    root: http://localhost:8081/api/cache
-  curseforge:
-    root: http://localhost:8081/api/proxy

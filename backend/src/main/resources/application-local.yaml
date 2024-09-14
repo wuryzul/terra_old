@@ -1,0 +1,19 @@
+server:
+  port: 8081
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: cache_proxy
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/cache/**
+        - id: curse_forge_proxy
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/proxy/**
+terra:
+  client:
+    root: http://localhost:8081/api/cache
+  curseforge:
+    root: http://localhost:8081/api/proxy

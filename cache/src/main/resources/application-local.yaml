@@ -1,0 +1,5 @@
+terra:
+  client:
+    root: http://localhost:8080/api/cache
+  curseforge:
+    root: http://localhost:8080/api/proxy
