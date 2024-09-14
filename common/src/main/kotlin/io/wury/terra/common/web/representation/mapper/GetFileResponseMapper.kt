@@ -1,6 +1,6 @@
 package io.wury.terra.common.web.representation.mapper
 
-import io.wury.terra.common.core.model.FileModel
+import io.wury.terra.common.model.FileModel
 import io.wury.terra.common.web.representation.response.GetFileResponse
 import org.mapstruct.Mapper
 import org.springframework.core.convert.converter.Converter

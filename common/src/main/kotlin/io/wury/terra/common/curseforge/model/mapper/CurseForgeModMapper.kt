@@ -1,6 +1,6 @@
 package io.wury.terra.common.curseforge.model.mapper
 
-import io.wury.terra.common.core.model.ModModel
+import io.wury.terra.common.model.ModModel
 import io.wury.terra.common.curseforge.model.mod.Mod
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping

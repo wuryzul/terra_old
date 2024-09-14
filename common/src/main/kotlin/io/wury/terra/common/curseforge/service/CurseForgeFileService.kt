@@ -1,6 +1,6 @@
 package io.wury.terra.common.curseforge.service
 
-import io.wury.terra.common.core.model.FileModel
+import io.wury.terra.common.model.FileModel
 import io.wury.terra.common.curseforge.model.mapper.CurseForgeFileMapper
 import io.wury.terra.common.curseforge.representation.response.GetFileResponse
 import org.springframework.beans.factory.annotation.Qualifier

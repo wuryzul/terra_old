@@ -1,6 +1,6 @@
 package io.wury.terra.common.web.representation.response
 
-import io.wury.terra.common.core.model.ModStatus
+import io.wury.terra.common.model.ModStatus
 
 data class GetModResponse(
     val id: Int,

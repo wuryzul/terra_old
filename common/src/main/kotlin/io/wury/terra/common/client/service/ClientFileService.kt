@@ -1,7 +1,7 @@
 package io.wury.terra.common.client.service
 
 import io.wury.terra.common.client.representation.mapper.ClientGetFileResponseMapper
-import io.wury.terra.common.core.model.FileModel
+import io.wury.terra.common.model.FileModel
 import io.wury.terra.common.web.representation.response.GetFileResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier

@@ -1,7 +1,7 @@
 package io.wury.terra.common.client.service
 
 import io.wury.terra.common.client.representation.mapper.ClientGetModResponseMapper
-import io.wury.terra.common.core.model.ModModel
+import io.wury.terra.common.model.ModModel
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service

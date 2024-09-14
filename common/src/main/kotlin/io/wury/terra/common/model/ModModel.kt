@@ -1,4 +1,4 @@
-package io.wury.terra.common.core.model
+package io.wury.terra.common.model
 
 enum class ModStatus {
     Unknown,

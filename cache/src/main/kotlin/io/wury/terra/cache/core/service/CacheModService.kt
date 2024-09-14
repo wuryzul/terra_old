@@ -1,7 +1,7 @@
 package io.wury.terra.cache.core.service
 
 import io.wury.terra.common.client.service.ClientModService
-import io.wury.terra.common.core.model.ModModel
+import io.wury.terra.common.model.ModModel
 import io.wury.terra.common.curseforge.service.CurseForgeModService
 import io.wury.terra.common.db.entity.ModDescriptionEntity
 import io.wury.terra.common.db.entity.ModEntity

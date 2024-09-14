@@ -12,11 +12,7 @@ class WebClientFactory(
         return WebClient.builder()
             .exchangeStrategies(exchangeStrategies)
             .baseUrl(baseUrl)
-            .defaultHeaders {
-                apiKey?.let { key ->
-                    it["x-api-key"] = key
-                }
-            }
+            .defaultHeaders { apiKey?.let { key -> it["x-api-key"] = key } }
             .build()
     }
 }
