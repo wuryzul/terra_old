@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
-@RequestMapping("/api/mod")
+@RequestMapping("/api/cache/mod")
 class ModController(
     private val modWebService: ModWebService,
 ) {

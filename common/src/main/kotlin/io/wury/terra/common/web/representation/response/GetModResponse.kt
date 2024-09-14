@@ -3,6 +3,7 @@ package io.wury.terra.common.web.representation.response
 import io.wury.terra.common.core.model.ModStatus
 
 data class GetModResponse(
+    val id: Int,
     val modId: Int,
     val name: String,
     val slug: String,

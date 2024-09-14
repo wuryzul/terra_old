@@ -4,6 +4,7 @@ import io.wury.terra.common.core.model.FileReleaseType
 import io.wury.terra.common.core.model.FileStatus
 
 data class GetFileResponse(
+    val id: Int,
     val modId: Int,
     val fileId: Int,
     val available: Boolean,

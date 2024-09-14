@@ -24,14 +24,13 @@ dependencies {
     implementation(libs.spring.cloud.starter.gateway)
 
     implementation(libs.liquibase.core)
+    implementation(libs.h2)
+    implementation(libs.r2dbc.h2)
     implementation(libs.spring.jdbc)
 
     developmentOnly(libs.spring.boot.devtools)
-    developmentOnly(libs.spring.boot.docker.compose)
 
     runtimeOnly(libs.micrometer.registry.prometheus)
-    runtimeOnly(libs.postgresql)
-    runtimeOnly(libs.postgresql.r2dbc)
 
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.spring.boot.testcontainers)

@@ -26,10 +26,10 @@ dependencies {
     implementation(libs.spring.cloud.starter.gateway)
     implementation(libs.spring.shell.starter)
 
+    implementation(libs.spring.jdbc)
     implementation(libs.liquibase.core)
     implementation(libs.h2)
     implementation(libs.r2dbc.h2)
-    implementation(libs.spring.jdbc)
 
     developmentOnly(libs.spring.boot.devtools)
 

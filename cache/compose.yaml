@@ -1,9 +1,0 @@
-services:
-  postgres:
-    image: 'postgres:latest'
-    environment:
-      - 'POSTGRES_DB=terra'
-      - 'POSTGRES_PASSWORD=terrapassword123!'
-      - 'POSTGRES_USER=terra'
-    ports:
-      - '5432:5432'

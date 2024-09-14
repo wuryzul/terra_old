@@ -150,4 +150,6 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-# End of https://www.toptal.com/developers/gitignore/api/git,gradle,visualstudiocode,jetbrains+all
+# End of https://www.toptal.com/developers/gitignore/api/git,gradle,visualstudiocode,jetbrains+all\
+
+.kotlin/
