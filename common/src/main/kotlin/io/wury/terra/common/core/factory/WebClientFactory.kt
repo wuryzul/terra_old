@@ -1,4 +1,4 @@
-package io.wury.terra.common.factory
+package io.wury.terra.common.core.factory
 
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.ExchangeStrategies

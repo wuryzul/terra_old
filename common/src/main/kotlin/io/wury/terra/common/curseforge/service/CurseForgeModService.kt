@@ -1,6 +1,6 @@
 package io.wury.terra.common.curseforge.service
 
-import io.wury.terra.common.model.ModModel
+import io.wury.terra.common.core.model.ModModel
 import io.wury.terra.common.curseforge.model.mapper.CurseForgeModMapper
 import io.wury.terra.common.curseforge.representation.response.GetModResponse
 import io.wury.terra.common.curseforge.representation.response.SearchModsResponse

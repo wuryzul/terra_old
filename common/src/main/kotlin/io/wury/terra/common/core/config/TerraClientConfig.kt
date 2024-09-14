@@ -1,4 +1,4 @@
-package io.wury.terra.common.client.config
+package io.wury.terra.common.core.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 

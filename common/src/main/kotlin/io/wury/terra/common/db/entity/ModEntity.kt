@@ -1,6 +1,6 @@
 package io.wury.terra.common.db.entity
 
-import io.wury.terra.common.model.ModStatus
+import io.wury.terra.common.core.model.ModStatus
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 

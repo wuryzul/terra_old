@@ -1,7 +1,7 @@
 package io.wury.terra.common.web.representation.response
 
-import io.wury.terra.common.model.FileReleaseType
-import io.wury.terra.common.model.FileStatus
+import io.wury.terra.common.core.model.FileReleaseType
+import io.wury.terra.common.core.model.FileStatus
 
 data class GetFileResponse(
     val id: Int,

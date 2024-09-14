@@ -1,6 +1,6 @@
-package io.wury.terra.common.config
+package io.wury.terra.common.core.config
 
-import io.wury.terra.common.client.config.TerraClientConfig
+import io.wury.terra.common.core.config.TerraClientConfig
 import io.wury.terra.common.curseforge.config.CurseForgeConfig
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.ComponentScan

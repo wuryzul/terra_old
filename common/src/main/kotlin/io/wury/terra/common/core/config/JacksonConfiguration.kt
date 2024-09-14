@@ -1,4 +1,4 @@
-package io.wury.terra.common.config
+package io.wury.terra.common.core.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean

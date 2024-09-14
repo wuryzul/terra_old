@@ -1,4 +1,4 @@
-package io.wury.terra.common.config
+package io.wury.terra.common.core.config
 
 import org.mapstruct.extensions.spring.SpringMapperConfig
 import org.springframework.context.annotation.Configuration

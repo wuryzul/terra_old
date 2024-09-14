@@ -1,7 +1,7 @@
 package io.wury.terra.common.curseforge.model.mapper
 
 import io.wury.terra.common.curseforge.model.file.File
-import io.wury.terra.common.model.FileModel
+import io.wury.terra.common.core.model.FileModel
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
 import org.springframework.core.convert.converter.Converter

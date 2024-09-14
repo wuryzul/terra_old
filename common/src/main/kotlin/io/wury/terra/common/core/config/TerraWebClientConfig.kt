@@ -1,6 +1,6 @@
-package io.wury.terra.common.client.config
+package io.wury.terra.common.core.config
 
-import io.wury.terra.common.factory.WebClientFactory
+import io.wury.terra.common.core.factory.WebClientFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.client.WebClient

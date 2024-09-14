@@ -1,12 +1,12 @@
 package io.wury.terra.cache.core.service
 
-import io.wury.terra.common.client.service.ClientModService
-import io.wury.terra.common.model.ModModel
+import io.wury.terra.common.core.service.ClientModService
+import io.wury.terra.common.core.model.ModModel
 import io.wury.terra.common.curseforge.service.CurseForgeModService
 import io.wury.terra.common.db.entity.ModDescriptionEntity
 import io.wury.terra.common.db.entity.ModEntity
-import io.wury.terra.common.db.entity.mapper.ModEntityToModelMapper
-import io.wury.terra.common.db.entity.mapper.ModModelToEntityMapper
+import io.wury.terra.common.db.mapper.ModEntityToModelMapper
+import io.wury.terra.common.db.mapper.ModModelToEntityMapper
 import io.wury.terra.common.db.repository.ModDescriptionRepository
 import io.wury.terra.common.db.repository.ModRepository
 import kotlinx.coroutines.flow.Flow

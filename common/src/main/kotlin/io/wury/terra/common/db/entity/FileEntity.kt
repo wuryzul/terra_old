@@ -1,7 +1,7 @@
 package io.wury.terra.common.db.entity
 
-import io.wury.terra.common.model.FileReleaseType
-import io.wury.terra.common.model.FileStatus
+import io.wury.terra.common.core.model.FileReleaseType
+import io.wury.terra.common.core.model.FileStatus
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 

@@ -1,6 +1,6 @@
 package io.wury.terra.cache.web.service
 
-import io.wury.terra.common.model.ModModel
+import io.wury.terra.common.core.model.ModModel
 import io.wury.terra.cache.core.service.CacheModService
 import io.wury.terra.common.web.representation.mapper.GetModResponseMapper
 import io.wury.terra.common.web.representation.request.GetModsRequest
