@@ -8,6 +8,7 @@ import io.wury.terra.cache.curseforge.representation.response.GetModResponse
 import io.wury.terra.cache.curseforge.representation.response.GetModsResponse
 import io.wury.terra.cache.curseforge.representation.response.SearchModsResponse
 import io.wury.terra.cache.curseforge.representation.response.StringResponse
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
@@ -15,6 +16,7 @@ import kotlin.reflect.full.declaredMemberProperties
 
 @Service
 class ModClient(
+    @Qualifier("curse-forge-web-client")
     private val client: WebClient,
 ) {
     suspend fun getMod(modId: Int): GetModResponse {

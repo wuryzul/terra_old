@@ -1,7 +1,7 @@
 package io.wury.terra.cache.web.service
 
 import io.wury.terra.common.core.model.ModModel
-import io.wury.terra.cache.core.service.ModService
+import io.wury.terra.cache.core.service.CacheModService
 import io.wury.terra.common.web.representation.mapper.GetModResponseMapper
 import io.wury.terra.common.web.representation.request.GetModsRequest
 import io.wury.terra.common.web.representation.response.GetModDescriptionResponse
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class ModWebService(
-    private val modService: ModService,
+    private val cacheModService: CacheModService,
     private val getModResponseMapper: GetModResponseMapper,
 ) {
     fun ModModel.toGetModResponse(): GetModResponse =
@@ -26,26 +26,26 @@ class ModWebService(
         GetModDescriptionResponse(this)
 
     suspend fun getAllMods(): GetModsResponse {
-        return modService.getAllMods().toGetModsResponse()
+        return cacheModService.getAllMods().toGetModsResponse()
     }
 
     suspend fun getMods(request: GetModsRequest): GetModsResponse {
-        return modService.getMods(request.modIds).toGetModsResponse()
+        return cacheModService.getMods(request.modIds).toGetModsResponse()
     }
 
     suspend fun getModByModId(modId: Int): GetModResponse? {
-        return modService.getMod(modId)?.toGetModResponse()
+        return cacheModService.getMod(modId)?.toGetModResponse()
     }
 
     suspend fun getModBySlug(slug: String): GetModResponse? {
-        return modService.getModBySlug(slug)?.toGetModResponse()
+        return cacheModService.getModBySlug(slug)?.toGetModResponse()
     }
 
     suspend fun getModDescription(modId: Int): GetModDescriptionResponse? {
-        return modService.getModDescription(modId)?.toGetModDescriptionResponse()
+        return cacheModService.getModDescription(modId)?.toGetModDescriptionResponse()
     }
 
     suspend fun getModDescriptionBySlug(slug: String): GetModDescriptionResponse? {
-        return modService.getModDescriptionBySlug(slug)?.toGetModDescriptionResponse()
+        return cacheModService.getModDescriptionBySlug(slug)?.toGetModDescriptionResponse()
     }
 }

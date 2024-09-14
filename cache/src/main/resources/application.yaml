@@ -1,6 +1,16 @@
 spring:
   application:
     name: Terra Cache
+  cloud:
+    gateway:
+      routes:
+        - id: curse_forge_proxy
+          uri: https://api.curseforge.com
+          predicates:
+            - Path=/proxy/**
+          filters:
+            - AddRequestHeader=x-api-key, ${CURSE_FORGE_API_KEY}
+            - RewritePath=/proxy/(.*), /v1/$1
   liquibase:
     change-log: classpath:/db/changelog/db.changelog.yaml
 management:
@@ -9,6 +19,7 @@ management:
       exposure:
         include: "*"
 terra:
+  client:
+    root: http://localhost:8080/api
   curseforge:
-    root: https://api.curseforge.com/v1
-    api-key: ${CURSE_FORGE_API_KEY}
+    root: http://localhost:8080/proxy

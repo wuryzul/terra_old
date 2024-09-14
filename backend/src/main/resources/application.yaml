@@ -3,6 +3,19 @@ server:
 spring:
   application:
     name: Terra
+  cloud:
+    gateway:
+      routes:
+        - id: cache_proxy
+          uri: http://localhost:8080
+          predicates:
+            - Path=/cache/**
+          filters:
+            - RewritePath=/cache/(.*), /api/$1
+        - id: curse_forge_proxy
+          uri: http://localhost:8080
+          predicates:
+            - Path=/proxy/**
   liquibase:
     change-log: classpath:/db/changelog/db.changelog.yaml
 management:
@@ -12,4 +25,6 @@ management:
         include: "*"
 terra:
   client:
-    root: http://localhost:8080/api
+    root: http://localhost:8081/cache
+  curseforge:
+    root: http://localhost:8081/proxy

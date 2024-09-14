@@ -1,4 +1,4 @@
-package io.wury.terra.backend.client.config
+package io.wury.terra.common.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
@@ -7,7 +7,6 @@ import org.springframework.http.MediaType
 import org.springframework.http.codec.json.Jackson2JsonDecoder
 import org.springframework.http.codec.json.Jackson2JsonEncoder
 import org.springframework.web.reactive.function.client.ExchangeStrategies
-import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
 class WebClientConfig {
@@ -20,13 +19,4 @@ class WebClientConfig {
             }
             .build()
     }
-
-    @Bean
-    fun webClient(exchangeStrategies: ExchangeStrategies, terraClientConfig: TerraClientConfig): WebClient {
-        return WebClient.builder()
-            .exchangeStrategies(exchangeStrategies)
-            .baseUrl(terraClientConfig.root)
-            .build()
-    }
-
 }

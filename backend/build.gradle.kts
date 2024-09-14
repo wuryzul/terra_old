@@ -14,15 +14,17 @@ dependencies {
     kapt(libs.spring.boot.configuration.processor)
     kapt(libs.mapstruct.processor)
     kapt(libs.mapstruct.spring.extensions)
+    kapt(libs.spring.cloud.starter.gateway)
 
     implementation(libs.mapstruct)
     implementation(libs.mapstruct.spring.annotations)
 
-    implementation(libs.spring.shell.starter)
     implementation(libs.spring.boot.starter.actuator)
     implementation(libs.spring.boot.starter.data.r2dbc)
     implementation(libs.spring.boot.starter.validation)
     implementation(libs.spring.boot.starter.webflux)
+    implementation(libs.spring.cloud.starter.gateway)
+    implementation(libs.spring.shell.starter)
 
     implementation(libs.liquibase.core)
     implementation(libs.h2)

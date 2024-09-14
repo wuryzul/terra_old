@@ -1,9 +1,9 @@
-package io.wury.terra.cache.curseforge.config
+package io.wury.terra.common.curseforge.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 
-@ConfigurationProperties(prefix = "terra.curseforge")
+@ConfigurationProperties("terra.curseforge")
 data class CurseForgeConfig(
-    val apiKey: String,
     val root: String,
+    val apiKey: String? = null
 )

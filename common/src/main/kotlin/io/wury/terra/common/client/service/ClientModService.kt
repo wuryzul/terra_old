@@ -1,14 +1,16 @@
-package io.wury.terra.backend.client.service
+package io.wury.terra.common.client.service
 
-import io.wury.terra.backend.client.representation.mapper.ClientGetModResponseMapper
+import io.wury.terra.common.client.representation.mapper.ClientGetModResponseMapper
 import io.wury.terra.common.core.model.ModModel
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
 
 @Service
-class ModService(
+class ClientModService(
+    @Qualifier("curse-forge-web-client")
     private val webClient: WebClient,
     private val getModResponseMapper: ClientGetModResponseMapper,
 ) {

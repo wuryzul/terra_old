@@ -1,12 +1,12 @@
 package io.wury.terra.cache.core.service
 
-import io.wury.terra.cache.db.mapper.ModEntityToModelMapper
-import io.wury.terra.cache.db.mapper.ModModelToEntityMapper
 import io.wury.terra.cache.curseforge.client.ModClient
 import io.wury.terra.cache.curseforge.model.mapper.CurseForgeModMapper
 import io.wury.terra.cache.curseforge.representation.request.SearchModsRequest
 import io.wury.terra.cache.db.entity.ModDescriptionEntity
 import io.wury.terra.cache.db.entity.ModEntity
+import io.wury.terra.cache.db.mapper.ModEntityToModelMapper
+import io.wury.terra.cache.db.mapper.ModModelToEntityMapper
 import io.wury.terra.cache.db.repository.ModDescriptionRepository
 import io.wury.terra.cache.db.repository.ModRepository
 import io.wury.terra.common.core.model.ModModel
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.map
 import org.springframework.stereotype.Service
 
 @Service
-class ModService(
+class CacheModService(
     private val modRepository: ModRepository,
     private val modDescriptionRepository: ModDescriptionRepository,
     private val modClient: ModClient,
@@ -30,17 +30,17 @@ class ModService(
     private fun Flow<ModEntity>.toModel(): Flow<ModModel> =
         map(modEntityToModelMapper::convert)
 
-    suspend fun getModFromCurseForge(modId: Int): ModModel? {
+    suspend fun getModFromCurseForge(modId: Int): ModModel {
         return createMod(curseForgeModMapper.convert(modClient.getMod(modId).data))
     }
 
-    suspend fun getModFromCurseForge(slug: String): ModModel? {
+    suspend fun getModFromCurseForge(slug: String): ModModel {
         return modClient.searchMods(
             SearchModsRequest(
                 gameId = 432,
                 slug = slug
             )
-        ).data.singleOrNull()?.let { curseForgeModMapper.convert(it) }?.let { createMod(it) }
+        ).data.single().let { curseForgeModMapper.convert(it) }.let { createMod(it) }
     }
 
     suspend fun createMod(mod: ModModel): ModModel = modRepository.save(modModelToEntityMapper.convert(mod)).toModel()
@@ -50,25 +50,25 @@ class ModService(
     fun getMods(modIds: List<Int>): Flow<ModModel> =
         flow {
             modIds.forEach {
-                getMod(it)?.let { emit(it) }
+                emit(getMod(it))
             }
         }
 
-    suspend fun getMod(modId: Int): ModModel? =
+    suspend fun getMod(modId: Int): ModModel =
         modRepository.findByModId(modId)?.toModel() ?: getModFromCurseForge(modId)
 
-    suspend fun getModBySlug(slug: String): ModModel? =
+    suspend fun getModBySlug(slug: String): ModModel =
         modRepository.findBySlug(slug)?.toModel() ?: getModFromCurseForge(slug)
 
-    suspend fun getModDescription(mod: ModModel): String? =
+    suspend fun getModDescription(mod: ModModel): String =
         (modDescriptionRepository.findByModId(mod.modId) ?: ModDescriptionEntity(
             modId = mod.modId,
             description = modClient.getModDescription(mod.modId).data
         )).let { modDescriptionRepository.save(it) }.description
 
-    suspend fun getModDescription(modId: Int): String? =
-        getMod(modId)?.let { getModDescription(it) }
+    suspend fun getModDescription(modId: Int): String =
+        getModDescription(getMod(modId))
 
-    suspend fun getModDescriptionBySlug(slug: String): String? =
-        getModBySlug(slug)?.let { getModDescription(it) }
+    suspend fun getModDescriptionBySlug(slug: String): String =
+        getModDescription(getModBySlug(slug))
 }

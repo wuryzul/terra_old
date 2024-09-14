@@ -1,4 +1,4 @@
-package io.wury.terra.backend.client.representation.mapper
+package io.wury.terra.common.client.representation.mapper
 
 import io.wury.terra.common.core.model.ModModel
 import io.wury.terra.common.web.representation.response.GetModResponse

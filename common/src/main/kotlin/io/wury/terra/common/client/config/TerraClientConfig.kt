@@ -1,8 +1,8 @@
-package io.wury.terra.backend.client.config
+package io.wury.terra.common.client.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 
-@ConfigurationProperties(prefix = "terra.client")
+@ConfigurationProperties("terra.client")
 data class TerraClientConfig(
     val root: String
 )
