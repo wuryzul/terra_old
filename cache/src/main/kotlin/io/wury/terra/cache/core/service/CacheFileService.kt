@@ -1,27 +1,27 @@
 package io.wury.terra.cache.core.service
 
-import io.wury.terra.cache.curseforge.client.FileClient
-import io.wury.terra.cache.curseforge.model.mapper.CurseForgeFileMapper
-import io.wury.terra.cache.db.entity.FileEntity
-import io.wury.terra.cache.db.mapper.FileEntityToModelMapper
-import io.wury.terra.cache.db.mapper.FileModelToEntityMapper
-import io.wury.terra.cache.db.repository.FileRepository
+import io.wury.terra.common.client.service.ClientFileService
 import io.wury.terra.common.core.model.FileModel
+import io.wury.terra.common.curseforge.service.CurseForgeFileService
+import io.wury.terra.common.db.entity.FileEntity
+import io.wury.terra.common.db.entity.mapper.FileEntityToModelMapper
+import io.wury.terra.common.db.entity.mapper.FileModelToEntityMapper
+import io.wury.terra.common.db.repository.FileRepository
 import org.springframework.stereotype.Service
 
 @Service
 class CacheFileService(
     private val fileRepository: FileRepository,
-    private val fileClient: FileClient,
-    private val curseForgeFileMapper: CurseForgeFileMapper,
+    private val clientFileService: ClientFileService? = null,
+    private val curseForgeFileService: CurseForgeFileService,
     private val fileEntityToModelMapper: FileEntityToModelMapper,
     private val fileModelToEntityMapper: FileModelToEntityMapper,
     private val cacheModService: CacheModService,
 ) {
-    suspend fun getFileFromCurseForge(modId: Int, fileId: Int): FileModel {
-        return fileClient.getFile(modId, fileId)
-            .let { curseForgeFileMapper.convert(it.data) }
-            .let { createFile(it) }
+    suspend fun retrieveFile(modId: Int, fileId: Int) {
+        if (!fileRepository.existsByModIdAndFileId(modId, fileId)) {
+            createFile(clientFileService?.getFile(modId, fileId) ?: curseForgeFileService.getFile(modId, fileId))
+        }
     }
 
     fun FileEntity.toModel(): FileModel =
@@ -34,6 +34,7 @@ class CacheFileService(
     }
 
     suspend fun getFile(modId: Int, fileId: Int): FileModel {
-        return fileRepository.findById(modId, fileId)?.toModel() ?: getFileFromCurseForge(modId, fileId)
+        retrieveFile(modId, fileId)
+        return fileRepository.findByModIdAndFileId(modId, fileId)!!.toModel()
     }
 }

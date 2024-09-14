@@ -1,15 +1,14 @@
 package io.wury.terra.cache.core.service
 
-import io.wury.terra.cache.curseforge.client.ModClient
-import io.wury.terra.cache.curseforge.model.mapper.CurseForgeModMapper
-import io.wury.terra.cache.curseforge.representation.request.SearchModsRequest
-import io.wury.terra.cache.db.entity.ModDescriptionEntity
-import io.wury.terra.cache.db.entity.ModEntity
-import io.wury.terra.cache.db.mapper.ModEntityToModelMapper
-import io.wury.terra.cache.db.mapper.ModModelToEntityMapper
-import io.wury.terra.cache.db.repository.ModDescriptionRepository
-import io.wury.terra.cache.db.repository.ModRepository
+import io.wury.terra.common.client.service.ClientModService
 import io.wury.terra.common.core.model.ModModel
+import io.wury.terra.common.curseforge.service.CurseForgeModService
+import io.wury.terra.common.db.entity.ModDescriptionEntity
+import io.wury.terra.common.db.entity.ModEntity
+import io.wury.terra.common.db.entity.mapper.ModEntityToModelMapper
+import io.wury.terra.common.db.entity.mapper.ModModelToEntityMapper
+import io.wury.terra.common.db.repository.ModDescriptionRepository
+import io.wury.terra.common.db.repository.ModRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -18,9 +17,9 @@ import org.springframework.stereotype.Service
 @Service
 class CacheModService(
     private val modRepository: ModRepository,
+    private val clientModService: ClientModService? = null,
     private val modDescriptionRepository: ModDescriptionRepository,
-    private val modClient: ModClient,
-    private val curseForgeModMapper: CurseForgeModMapper,
+    private val curseForgeModService: CurseForgeModService,
     private val modEntityToModelMapper: ModEntityToModelMapper,
     private val modModelToEntityMapper: ModModelToEntityMapper,
 ) {
@@ -30,17 +29,18 @@ class CacheModService(
     private fun Flow<ModEntity>.toModel(): Flow<ModModel> =
         map(modEntityToModelMapper::convert)
 
-    suspend fun getModFromCurseForge(modId: Int): ModModel {
-        return createMod(curseForgeModMapper.convert(modClient.getMod(modId).data))
+    suspend fun retrieveMod(modId: Int) {
+        if (!modRepository.existsByModId(modId)) {
+            createMod(clientModService?.getMod(modId) ?: curseForgeModService.getMod(modId))
+        }
     }
 
-    suspend fun getModFromCurseForge(slug: String): ModModel {
-        return modClient.searchMods(
-            SearchModsRequest(
-                gameId = 432,
-                slug = slug
-            )
-        ).data.single().let { curseForgeModMapper.convert(it) }.let { createMod(it) }
+    suspend fun getModId(slug: String): Int {
+        return modRepository.findBySlug(slug)?.modId ?: curseForgeModService.getMod(slug).modId
+    }
+
+    suspend fun retrieveMod(slug: String) {
+        retrieveMod(getModId(slug))
     }
 
     suspend fun createMod(mod: ModModel): ModModel = modRepository.save(modModelToEntityMapper.convert(mod)).toModel()
@@ -54,16 +54,20 @@ class CacheModService(
             }
         }
 
-    suspend fun getMod(modId: Int): ModModel =
-        modRepository.findByModId(modId)?.toModel() ?: getModFromCurseForge(modId)
+    suspend fun getMod(modId: Int): ModModel {
+        retrieveMod(modId)
+        return modRepository.findByModId(modId)!!.toModel()
+    }
 
-    suspend fun getModBySlug(slug: String): ModModel =
-        modRepository.findBySlug(slug)?.toModel() ?: getModFromCurseForge(slug)
+    suspend fun getModBySlug(slug: String): ModModel {
+        retrieveMod(slug)
+        return modRepository.findBySlug(slug)!!.toModel()
+    }
 
     suspend fun getModDescription(mod: ModModel): String =
         (modDescriptionRepository.findByModId(mod.modId) ?: ModDescriptionEntity(
             modId = mod.modId,
-            description = modClient.getModDescription(mod.modId).data
+            description = curseForgeModService.getModDescription(mod.modId)
         )).let { modDescriptionRepository.save(it) }.description
 
     suspend fun getModDescription(modId: Int): String =

@@ -10,9 +10,7 @@ dependencies {
     implementation(project(":common"))
 
     kapt(libs.spring.boot.configuration.processor)
-    kapt(libs.spring.cloud.starter.gateway)
     kapt(libs.mapstruct.processor)
-    kapt(libs.mapstruct.spring.extensions)
 
     implementation(libs.mapstruct)
     implementation(libs.mapstruct.spring.annotations)
@@ -24,9 +22,8 @@ dependencies {
     implementation(libs.spring.cloud.starter.gateway)
 
     implementation(libs.liquibase.core)
-    implementation(libs.h2)
-    implementation(libs.r2dbc.h2)
-    implementation(libs.spring.jdbc)
+    runtimeOnly(libs.h2)
+    runtimeOnly(libs.r2dbc.h2)
 
     developmentOnly(libs.spring.boot.devtools)
 

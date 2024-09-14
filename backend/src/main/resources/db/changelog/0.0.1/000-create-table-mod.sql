@@ -1,0 +1,21 @@
+create table mod(
+    id serial primary key,
+    mod_id int not null unique,
+    name varchar not null,
+    slug varchar not null,
+    summary varchar not null,
+    status varchar not null,
+    download_count bigint not null,
+    featured boolean not null,
+    primary_category_id int not null,
+    class_id int null,
+    main_file_id int not null,
+    date_created varchar not null,
+    date_modified varchar not null,
+    date_released varchar not null,
+    allow_mod_distribution boolean null,
+    game_popularity_rank int not null,
+    available boolean not null,
+    thumbs_up_count int not null,
+    rating float null
+);

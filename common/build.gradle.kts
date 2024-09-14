@@ -8,9 +8,7 @@ dependencies {
     implementation(platform(rootProject))
 
     kapt(libs.spring.boot.configuration.processor)
-    kapt(libs.spring.cloud.starter.gateway)
     kapt(libs.mapstruct.processor)
-    kapt(libs.mapstruct.spring.extensions)
 
     api(libs.jackson.module.kotlin)
     api(libs.reactor.kotlin.extensions)

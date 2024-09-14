@@ -10,7 +10,7 @@ import org.springframework.web.reactive.function.client.awaitBody
 
 @Service
 class ClientModService(
-    @Qualifier("curse-forge-web-client")
+    @Qualifier("terra-web-client")
     private val webClient: WebClient,
     private val getModResponseMapper: ClientGetModResponseMapper,
 ) {

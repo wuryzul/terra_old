@@ -14,13 +14,36 @@ spring:
           uri: http://localhost:8080
           predicates:
             - Path=/api/proxy/**
+  h2:
+    console:
+      enabled: true
   liquibase:
-    change-log: classpath:/db/changelog/db.changelog.yaml
+    url: jdbc:h2:mem:backend
+    user: sa
+    change-log: classpath*:/db/changelog/db.changelog.yaml
+    liquibase-schema: PUBLIC
+    default-schema: APP
+  output:
+    ansi:
+      enabled: always
+  r2dbc:
+    url: r2dbc:h2:mem:///backend
+    username: sa
+    password: ''
+    properties:
+      Mode: MySQL
+      AUTO_SERVER: TRUE
+      AUTO_RECONNECT: TRUE
+      MULTI_THREADED: TRUE
+      DB_CLOSE_ON_EXIT: TRUE
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+logging:
+  level:
+    liquibase: INFO
 terra:
   client:
     root: http://localhost:8081/api/cache
